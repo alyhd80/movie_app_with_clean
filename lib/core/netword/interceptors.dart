@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 /// This interceptor is used to show request and response logs
 class LoggerInterceptor extends Interceptor {
   Logger logger = Logger(printer: PrettyPrinter(methodCount: 0, colors: true,printEmojis: true));
@@ -29,5 +29,17 @@ class LoggerInterceptor extends Interceptor {
         'HEADERS: ${response.headers} \n'
         'Data: ${response.data}'); // Debug log
     handler.next(response); // continue with the Response
+  }
+}
+
+class AuthorizationInterceptor extends Interceptor{
+  @override
+  Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+    final SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+    final token=sharedPreferences.getString('token');
+    options.headers['Authorization']='Bearer ${token}';
+
+    print(options.headers);
+    handler.next(options); // continue with the Request
   }
 }

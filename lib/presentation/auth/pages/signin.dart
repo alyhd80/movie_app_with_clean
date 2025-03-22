@@ -4,7 +4,7 @@ import 'package:movie_app/common/helper/message/display_message.dart';
 import 'package:movie_app/common/helper/navigation/app_navigation.dart';
 import 'package:movie_app/core/config/theme/app_colors.dart';
 import 'package:movie_app/data/auth/models/signin_req_params.dart';
-import 'package:movie_app/domain/use_cases/signin.dart';
+import 'package:movie_app/domain/auth/use_cases/signin.dart';
 import 'package:movie_app/presentation/auth/pages/signup.dart';
 import 'package:movie_app/presentation/home/pages/home.dart';
 import 'package:movie_app/service_locator.dart';

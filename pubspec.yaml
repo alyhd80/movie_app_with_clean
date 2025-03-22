@@ -30,6 +30,8 @@ dev_dependencies:
   logger:
   get_it:
   shared_preferences:
+  flutter_svg:
+  fan_carousel_image_slider: 
 
 
 flutter:
