@@ -24,6 +24,12 @@ dev_dependencies:
 
   flutter_lints: ^5.0.0
   flutter_bloc:
+  reactive_button: ^0.0.9
+  dartz:
+  dio:
+  logger:
+  get_it:
+  shared_preferences:
 
 
 flutter:

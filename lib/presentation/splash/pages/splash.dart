@@ -20,7 +20,7 @@ class SplashPage extends StatelessWidget {
           if (state is UnAuthenticated) {
             print("-------UnAuthenticated");
 
-            AppNavigator.pushReplacement(context, const SignInPage());
+            AppNavigator.pushReplacement(context,  SignInPage());
           }
 
           if (state is Authenticated) {

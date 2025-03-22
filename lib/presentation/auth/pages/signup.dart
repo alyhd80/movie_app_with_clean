@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/common/helper/message/display_message.dart';
 import 'package:movie_app/common/helper/navigation/app_navigation.dart';
 import 'package:movie_app/core/config/theme/app_colors.dart';
-import 'package:movie_app/data/auth/models/signin_req_params.dart';
-import 'package:movie_app/domain/use_cases/signin.dart';
-import 'package:movie_app/presentation/auth/pages/signup.dart';
+import 'package:movie_app/data/auth/models/signup_req_params.dart';
+
+import 'package:movie_app/domain/use_cases/signup.dart';
 import 'package:movie_app/presentation/home/pages/home.dart';
 import 'package:movie_app/service_locator.dart';
 import 'package:reactive_button/reactive_button.dart';
 
-class SignInPage extends StatelessWidget {
-  SignInPage({super.key});
+class SignUpPage extends StatelessWidget {
+  SignUpPage({super.key});
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _password = TextEditingController();
@@ -25,7 +25,7 @@ class SignInPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _signInText(),
+              _SignUpText(),
               const SizedBox(
                 height: 30,
               ),
@@ -41,15 +41,15 @@ class SignInPage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              _signUpText(context)
+              _signInText(context)
             ],
           )),
     );
   }
 
-  Widget _signInText() {
+  Widget _SignUpText() {
     return Text(
-      'Sign In',
+      'Sign Up',
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
     );
   }
@@ -73,36 +73,38 @@ class SignInPage extends StatelessWidget {
         title: "Sign In",
         activeColor: AppColors.primary,
         onPressed: () async {
-          sl<SigninUseCase>().call(
-              params: SigninReqParams(
-                  email: _emailController.text, password: _password.text)).then((result) {
+          sl<SignupUseCase>()
+              .call(
+            params: SignupReqParams(
+              email: _emailController.text,
+              password: _password.text,
+            ),
+          )
+              .then((result) {
             result.fold(
-                  (error) {
+              (error) {
                 DisplayMessage.errorMessage(error, context);
               },
-                  (data) {
+              (data) {
+                print('Success: $data');
                 AppNavigator.pushAndRemove(context, const HomePage());
               },
             );
           });
-
         },
-        onSuccess: () {
-          AppNavigator.pushAndRemove(context, const HomePage());
-        },
-        onFailure: (error) {
-        });
+        onSuccess: () {},
+        onFailure: (error) {});
   }
 
-  Widget _signUpText(BuildContext context) {
+  Widget _signInText(BuildContext context) {
     return Text.rich(TextSpan(children: [
-      TextSpan(text: "Dont you have account?"),
+      TextSpan(text: "Do you have account?"),
       TextSpan(
-          text: " Sign Up",
+          text: " Sign In",
           style: TextStyle(color: Colors.blue),
           recognizer: TapGestureRecognizer()
             ..onTap = () {
-              AppNavigator.push(context, SignUpPage());
+              Navigator.of(context).pop();
             }),
     ]));
   }
